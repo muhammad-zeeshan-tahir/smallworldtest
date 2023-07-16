@@ -1,0 +1,32 @@
+services:
+
+
+  smallworldtest:
+    container_name: smallworldtest
+    build: .
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3000:80
+
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - 4306:3306
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 3001:80
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: secret
+    links:
+      - mysql
+
